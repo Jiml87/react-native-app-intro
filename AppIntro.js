@@ -15,7 +15,6 @@ import Swiper from 'react-native-swiper';
 import DoneButton from './components/DoneButton';
 import SkipButton from './components/SkipButton';
 import RenderDots from './components/Dots';
-import CustomButton from './components/CustomButton';
 
 const windowsWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;
@@ -32,13 +31,13 @@ const defaulStyles = {
   },
   info: {
     flex: 0.5,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     padding: 30,
   },
   slide: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#9DD6EB',
     padding: 15,
   },
@@ -50,7 +49,6 @@ const defaulStyles = {
   description: {
     color: '#fff',
     fontSize: 20,
-    justifyContent: 'center',
   },
   controllText: {
     color: '#fff',
@@ -59,13 +57,13 @@ const defaulStyles = {
   },
   dotStyle: {
     backgroundColor: 'rgba(255,255,255,.3)',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 0,
-    marginBottom: 0,
+    width: 13,
+    height: 13,
+    borderRadius: 7,
+    marginLeft: 7,
+    marginRight: 7,
+    marginTop: 7,
+    marginBottom: 7,
   },
   activeDotStyle: {
     backgroundColor: '#fff',
@@ -73,7 +71,6 @@ const defaulStyles = {
   paginationContainer: {
     position: 'absolute',
     bottom: 25,
-    // bottom: 195,
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -81,7 +78,6 @@ const defaulStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    paddingBottom: 168,
   },
   dotContainer: {
     flex: 0.6,
@@ -105,12 +101,6 @@ const defaulStyles = {
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  customButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00B373',
-    height: 45,
   },
 }
 
@@ -213,30 +203,29 @@ export default class AppIntro extends Component {
       isSkipBtnShow = true;
     }
     return (
-      <View style={[this.styles.paginationContainer]} pointerEvents='box-none'>
-          {this.props.showSkipButton ? <SkipButton
+      <View style={[this.styles.paginationContainer]}>
+        {this.props.showSkipButton ? <SkipButton
+          {...this.props}
+          {...this.state}
+          isSkipBtnShow={isSkipBtnShow}
+          styles={this.styles}
+          onSkipBtnClick={() => this.props.onSkipBtnClick(index)} /> :
+          <View style={this.styles.btnContainer} />
+        }
+        {this.props.showDots && RenderDots(index, total, {
+          ...this.props,
+          styles: this.styles
+        })}
+        {this.props.showDoneButton ? <DoneButton
             {...this.props}
             {...this.state}
-            isSkipBtnShow={isSkipBtnShow}
+            isDoneBtnShow={isDoneBtnShow}
             styles={this.styles}
-            onSkipBtnClick={() => this.props.onSkipBtnClick(index)} /> :
+            onNextBtnClick={this.onNextBtnClick.bind(this, context)}
+            onDoneBtnClick={this.props.onDoneBtnClick} /> :
             <View style={this.styles.btnContainer} />
           }
-          {this.props.showDots && RenderDots(index, total, {
-            ...this.props,
-            styles: this.styles
-          })}
-          {this.props.showDoneButton ? <DoneButton
-              {...this.props}
-              {...this.state}
-              isDoneBtnShow={isDoneBtnShow}
-              styles={this.styles}
-              onNextBtnClick={this.onNextBtnClick.bind(this, context)}
-              onDoneBtnClick={this.props.onDoneBtnClick} /> :
-              <View style={this.styles.btnContainer} />
-          }
-          <CustomButton customButton={this.props.customButton} onDoneCustomClick={this.props.onDoneCustomClick} />
-        </View>
+      </View>
     );
   }
 
@@ -381,7 +370,6 @@ AppIntro.propTypes = {
   onSkipBtnClick: PropTypes.func,
   onDoneBtnClick: PropTypes.func,
   onNextBtnClick: PropTypes.func,
-  onDoneCustomClick: PropTypes.func,
   pageArray: PropTypes.array,
   doneBtnLabel: PropTypes.oneOfType([
     PropTypes.string,
@@ -396,7 +384,6 @@ AppIntro.propTypes = {
     PropTypes.element,
   ]),
   customStyles: PropTypes.object,
-  customButton: PropTypes.number,
   defaultIndex: PropTypes.number,
   showSkipButton: PropTypes.bool,
   showDoneButton: PropTypes.bool,
@@ -409,12 +396,10 @@ AppIntro.defaultProps = {
   rightTextColor: '#fff',
   leftTextColor: '#fff',
   pageArray: [],
-  customButton: defaulStyles.customButton,
   onSlideChange: () => {},
   onSkipBtnClick: () => {},
   onDoneBtnClick: () => {},
   onNextBtnClick: () => {},
-  onDoneCustomClick: () => {},
   doneBtnLabel: 'Done',
   skipBtnLabel: 'Skip',
   nextBtnLabel: '›',

@@ -10,7 +10,6 @@ export const Dot = ({
   if (active) {
     return (
       <View
-        pointerEvents='none'
         style={[styles.dotStyle, styles.activeDotStyle, { 
           backgroundColor: activeDotColor 
         }]}
@@ -18,8 +17,7 @@ export const Dot = ({
     );
   } else {
     return (
-      <View
-        pointerEvents='none'
+      <View 
         style={[styles.dotStyle, { 
           backgroundColor: dotColor
         }]} />
