@@ -24,7 +24,13 @@ const style = {
 }
 const CustomButton = (props) => (
     <View style={style.wraper}>
-        <TouchableOpacity style={props.customButton} onPress={props.onDoneCustomClick}>
+        <TouchableOpacity
+            style={props.customButton}
+            onPress={props.onDoneCustomClick}
+            accessible={false}
+            testId="button-done"
+            accessibilityLabel="button-done"
+        >
             <Text style={style.textBtn}>Got It</Text>
         </TouchableOpacity>
     </View>
