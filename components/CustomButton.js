@@ -28,7 +28,7 @@ const CustomButton = (props) => (
             style={props.customButton}
             onPress={props.onDoneCustomClick}
             accessible={false}
-            testId="button-done"
+            testID="button-done"
             accessibilityLabel="button-done"
         >
             <Text style={style.textBtn}>Got It</Text>
