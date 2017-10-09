@@ -259,10 +259,16 @@ export default class AppIntro extends Component {
           <Image style={imgStyle} source={imgSource} />
         </Animated.View>
         <View style={this.styles.info}>
-          <Animated.View style={AnimatedStyle2.transform}>
+          {/* <Animated.View style={AnimatedStyle2.transform}>
             <Text style={[this.styles.title, { color: fontColor }]}>{title}</Text>
           </Animated.View>
           <Animated.View style={AnimatedStyle3.transform}>
+            <Text style={[this.styles.description, { color: fontColor }]}>{description}</Text>
+          </Animated.View> */}
+          <Animated.View style={[this.styles.header, ...AnimatedStyle2.transform]}>
+            <Text style={[this.styles.title, { color: fontColor }]}>{title}</Text>
+          </Animated.View>
+          <Animated.View style={[this.styles.header, ...AnimatedStyle3.transform]}>
             <Text style={[this.styles.description, { color: fontColor }]}>{description}</Text>
           </Animated.View>
         </View>
